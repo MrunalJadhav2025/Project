@@ -9,27 +9,29 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0a0a0a; color: #e0e0e0; line-height: 1.6; overflow-x: hidden; }
-        .navbar { position: fixed; top: 0; left: 0; right: 0; padding: 20px 60px; display: flex; justify-content: space-between; align-items: center; background: rgba(10, 10, 10, 0.8); backdrop-filter: blur(20px); z-index: 1000; border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
-        .logo { font-size: 1.2em; font-weight: 700; color: #fff; }
+        .page { display: none; min-height: 100vh; }
+        .page.active { display: block; }
+        .navbar { position: fixed; top: 0; left: 0; right: 0; padding: 20px 60px; display: flex; justify-content: space-between; align-items: center; background: rgba(10, 10, 10, 0.95); backdrop-filter: blur(20px); z-index: 1000; border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
+        .logo { font-size: 1.2em; font-weight: 700; color: #fff; cursor: pointer; }
         .nav-links { display: flex; gap: 40px; align-items: center; }
-        .nav-links a { color: #999; text-decoration: none; font-size: 0.95em; font-weight: 500; transition: color 0.3s; }
-        .nav-links a:hover { color: #fff; }
-        .hero { min-height: 100vh; display: flex; align-items: center; justify-content: space-between; padding: 120px 60px 60px; max-width: 1400px; margin: 0 auto; gap: 60px; }
-        .hero-content { max-width: 800px; flex: 1; }
-        .hero-image-container {flex-shrink: 0; width: 350px; height: 350px; position: relative; margin-left: 40px; }
+        .nav-links a { color: #999; text-decoration: none; font-size: 0.95em; font-weight: 500; transition: color 0.3s; cursor: pointer; }
+        .nav-links a:hover, .nav-links a.active { color: #fff; }
+        .hero { min-height: 100vh; display: flex; align-items: center; justify-content: space-between; padding: 120px 60px 60px; max-width: 1400px; margin: 0 auto; gap: 80px; }
+        .hero-content { max-width: 700px; flex: 1; }
+        .hero-image-container { flex-shrink: 0; width: 350px; height: 350px; position: relative; }
         .hero-image { width: 100%; height: 100%; border-radius: 20px; object-fit: cover; border: 2px solid rgba(255, 255, 255, 0.1); box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5); }
         .image-placeholder { width: 100%; height: 100%; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 20px; display: flex; align-items: center; justify-content: center; font-size: 8em; border: 2px solid rgba(255, 255, 255, 0.1); box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5); }
         .wave-emoji { font-size: 3em; display: inline-block; animation: wave 2s ease-in-out infinite; }
         @keyframes wave { 0%, 100% { transform: rotate(0deg); } 10%, 30% { transform: rotate(14deg); } 20% { transform: rotate(-8deg); } 40% { transform: rotate(-4deg); } 50% { transform: rotate(10deg); } }
         .greeting { color: #666; font-size: 1.1em; margin-bottom: 15px; font-weight: 500; }
-        .hero h1 { font-size: 5em; font-weight: 800; color: #fff; line-height: 1.1; margin-bottom: 20px; letter-spacing: -0.02em; }
+        .hero h1 { font-size: 4.5em; font-weight: 800; color: #fff; line-height: 1.1; margin-bottom: 20px; letter-spacing: -0.02em; }
         .hero .location { color: #999; font-size: 1.3em; margin-bottom: 30px; font-weight: 400; }
-        .hero-description { font-size: 1.15em; color: #999; max-width: 700px; line-height: 1.5; margin-bottom: 40px; text-align: justify; }
-        .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px; margin: 80px 0; }
+        .hero-description { font-size: 1.1em; color: #999; line-height: 1.7; margin-bottom: 40px; text-align: justify; }
+        .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px; margin: 60px 0 0 0; }
         .stat-item { text-align: center; }
         .stat-number { font-size: 3.5em; font-weight: 800; color: #fff; line-height: 1; margin-bottom: 10px; }
         .stat-label { color: #666; font-size: 0.95em; font-weight: 500; }
-        .section { padding: 100px 60px; max-width: 1400px; margin: 0 auto; }
+        .section { padding: 120px 60px 80px; max-width: 1400px; margin: 0 auto; min-height: 100vh; }
         .section-header { display: flex; align-items: center; gap: 15px; margin-bottom: 60px; }
         .section-icon { width: 50px; height: 50px; background: #1a1a1a; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5em; }
         .section-title { font-size: 2.5em; font-weight: 700; color: #fff; }
@@ -62,12 +64,17 @@
         .project-title { font-size: 1.3em; font-weight: 600; color: #fff; margin-bottom: 10px; }
         .project-tech { color: #667eea; font-size: 0.9em; margin-bottom: 15px; font-weight: 500; }
         .project-description { color: #999; line-height: 1.6; font-size: 0.95em; }
-        .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
-        .skill-card { background: #111; border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 16px; padding: 30px 25px; text-align: center; transition: all 0.3s ease; }
-        .skill-card:hover { background: #151515; border-color: rgba(255, 255, 255, 0.1); transform: translateY(-5px); }
-        .skill-icon { font-size: 2.5em; margin-bottom: 15px; }
-        .skill-name { font-size: 1em; color: #fff; font-weight: 600; margin-bottom: 5px; }
-        .skill-category { color: #666; font-size: 0.85em; }
+        
+        .skills-categories { display: grid; gap: 40px; }
+        .skill-category-card { background: #111; border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 20px; padding: 40px; transition: all 0.3s ease; }
+        .skill-category-card:hover { background: #151515; border-color: rgba(255, 255, 255, 0.1); transform: translateY(-5px); }
+        .skill-category-title { font-size: 1.8em; color: #fff; font-weight: 700; margin-bottom: 25px; display: flex; align-items: center; gap: 15px; }
+        .category-icon { width: 50px; height: 50px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5em; }
+        .skill-items { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
+        .skill-item { background: #0a0a0a; border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 12px; padding: 20px 25px; color: #ccc; font-size: 0.95em; transition: all 0.3s ease; display: flex; align-items: center; gap: 12px; }
+        .skill-item:hover { background: #1a1a1a; border-color: rgba(255, 255, 255, 0.1); color: #fff; transform: translateX(5px); }
+        .skill-bullet { color: #667eea; font-weight: 700; font-size: 1.2em; }
+        
         .certifications-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; }
         .certification-card { background: #111; border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 16px; padding: 30px; transition: all 0.3s ease; display: flex; align-items: center; gap: 20px; }
         .certification-card:hover { background: #151515; border-color: rgba(255, 255, 255, 0.1); transform: translateY(-5px); }
@@ -75,7 +82,7 @@
         .cert-info { flex: 1; }
         .cert-name { font-size: 1.05em; color: #fff; font-weight: 600; margin-bottom: 5px; line-height: 1.3; }
         .cert-issuer { color: #666; font-size: 0.85em; }
-        .contact-section { text-align: center; padding: 120px 60px; max-width: 800px; margin: 0 auto; }
+        .contact-section { text-align: center; padding: 120px 60px; max-width: 800px; margin: 0 auto; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; }
         .contact-section h2 { font-size: 3.5em; font-weight: 800; color: #fff; margin-bottom: 20px; }
         .contact-description { font-size: 1.15em; color: #999; margin-bottom: 40px; }
         .contact-buttons { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; }
@@ -85,246 +92,331 @@
         @media (max-width: 768px) {
             .navbar { padding: 20px 30px; }
             .nav-links { display: none; }
-            .hero { padding: 100px 30px 40px; flex-direction: column-reverse; }
+            .hero { padding: 100px 30px 40px; flex-direction: column-reverse; gap: 40px; }
+            .hero-content { max-width: 100%; }
             .hero-image-container { width: 250px; height: 250px; }
             .hero h1 { font-size: 3em; }
             .stats { grid-template-columns: repeat(2, 1fr); gap: 30px; }
-            .section { padding: 60px 30px; }
+            .section { padding: 100px 30px 60px; }
             .projects-grid { grid-template-columns: 1fr; }
-            .skills-grid { grid-template-columns: repeat(2, 1fr); }
+            .skill-items { grid-template-columns: 1fr; }
             .contact-section h2 { font-size: 2.5em; }
         }
     </style>
 </head>
 <body>
     <nav class="navbar">
-        <div class="logo">Mrunal Jadhav</div>
+        <div class="logo" onclick="showPage('about')">Mrunal Jadhav</div>
         <div class="nav-links">
-            <a href="#about">About</a>
-            <a href="#experience">Experience</a>
-            <a href="#projects">Projects</a>
-            <a href="#education">Education</a>
-            <a href="#skills">Skills</a>
-            <a href="#research">Research</a>
-            <a href="#certifications">Certifications</a>
-            <a href="#contact">Contact</a>
+            <a onclick="showPage('about')" data-page="about" class="active">About</a>
+            <a onclick="showPage('experience')" data-page="experience">Experience</a>
+            <a onclick="showPage('projects')" data-page="projects">Projects</a>
+            <a onclick="showPage('education')" data-page="education">Education</a>
+            <a onclick="showPage('skills')" data-page="skills">Skills</a>
+            <a onclick="showPage('research')" data-page="research">Research</a>
+            <a onclick="showPage('certifications')" data-page="certifications">Certifications</a>
+            <a onclick="showPage('contact')" data-page="contact">Contact</a>
             <a href="Mrunal_Jadhav_CV.pdf" class="download-btn" download>Download Resume</a>
         </div>
     </nav>
 
-    <section class="hero" id="about">
-        <div class="hero-content">
-            <div class="greeting"><span class="wave-emoji">👋</span>Hello, How have you been?</div>
-            <h1>I'm Mrunal Jadhav,</h1>
-            <p class="location">Based in Washington DC - Baltimore Area.</p>
-            <p class="hero-description">
-                I'm a results-driven professional passionate about data, quality, and project management, with expertise in transforming complex data into actionable insights that drive innovation and measurable impact. Currently pursuing my Master's in Engineering Management with a focus in Data Science at UMBC, I bring a strong foundation in computer engineering and hands-on experience at Rohde & Schwarz and Accenture. My skills span Python, SQL, Tableau, Power BI, Excel, and SAP, enabling me to optimize processes, automate workflows, and deliver data-driven solutions. With proven abilities in data analytics, visualization, and process improvement, combined with a solid background in project management, stakeholder collaboration, and strategic planning. I strive to bridge the gap between technical precision and business strategy to empower smarter, more efficient decision-making.
-            </p>
-            <div class="stats">
-                <div class="stat-item"><div class="stat-number">5</div><div class="stat-label">Academic Projects Worked On</div></div>
-                <div class="stat-item"><div class="stat-number">3+</div><div class="stat-label">Years of Experience</div></div>
-                <div class="stat-item"><div class="stat-number">3</div><div class="stat-label">Companies Worked</div></div>
-                <div class="stat-item"><div class="stat-number">100%</div><div class="stat-label">Reports Delivered On-Time</div></div>
+    <!-- About Page -->
+    <div class="page active" id="about-page">
+        <section class="hero">
+            <div class="hero-content">
+                <div class="greeting"><span class="wave-emoji">👋</span>Hello, How have you been?</div>
+                <h1>I'm Mrunal Jadhav,</h1>
+                <p class="location">Based in Washington DC - Baltimore Area.</p>
+                <p class="hero-description">
+                    I'm a results-driven professional passionate about data, quality, and project management, with expertise in transforming complex data into actionable insights that drive innovation and measurable impact. Currently pursuing my Master's in Engineering Management with a focus in Data Science at UMBC, I bring a strong foundation in computer engineering and hands-on experience at Rohde & Schwarz and Accenture. My skills span Python, SQL, Tableau, Power BI, Excel, and SAP, enabling me to optimize processes, automate workflows, and deliver data-driven solutions. With proven abilities in data analytics, visualization, and process improvement, combined with a solid background in project management, stakeholder collaboration, and strategic planning. I strive to bridge the gap between technical precision and business strategy to empower smarter, more efficient decision-making.
+                </p>
+                <div class="stats">
+                    <div class="stat-item"><div class="stat-number">5</div><div class="stat-label">Academic Projects</div></div>
+                    <div class="stat-item"><div class="stat-number">3+</div><div class="stat-label">Years Experience</div></div>
+                    <div class="stat-item"><div class="stat-number">3</div><div class="stat-label">Companies</div></div>
+                    <div class="stat-item"><div class="stat-number">100%</div><div class="stat-label">On-Time Delivery</div></div>
+                </div>
             </div>
             <div class="hero-image-container">
-                <img src="ProfileImage.jpg" alt="Mrunal Jadhav" class="hero-image">
+                <img src="ProfileImage.jpg" alt="Mrunal Jadhav" class="hero-image" onerror="this.parentElement.innerHTML='<div class=\'image-placeholder\'>👤</div>'">
             </div>
-        </div>
-    </section>
+        </section>
+        <footer class="footer">
+            <p>&copy; 2025 Mrunal Vinay Jadhav. All rights reserved.</p>
+            <p style="margin-top: 10px;">Baltimore, Maryland</p>
+        </footer>
+    </div>
 
-    <section class="section" id="experience">
-        <div class="section-header"><div class="section-icon">💼</div><h2 class="section-title">Professional Journey</h2></div>
-        <div class="experience-grid">
-            <div class="experience-card">
-                <div class="experience-header">
-                    <div class="company-icon">R&S</div>
-                    <div class="experience-info">
-                        <h3>Quality Assurance & IT Applications Intern</h3>
-                        <div class="experience-company">Rohde & Schwarz</div>
-                        <div class="experience-date">June 2025 - December 2025 | Columbia, Maryland</div>
+    <!-- Experience Page -->
+    <div class="page" id="experience-page">
+        <section class="section">
+            <div class="section-header"><div class="section-icon">💼</div><h2 class="section-title">Professional Journey</h2></div>
+            <div class="experience-grid">
+                <div class="experience-card">
+                    <div class="experience-header">
+                        <div class="company-icon">R&S</div>
+                        <div class="experience-info">
+                            <h3>Quality Assurance & IT Applications Intern</h3>
+                            <div class="experience-company">Rohde & Schwarz</div>
+                            <div class="experience-date">June 2025 - December 2025 | Columbia, Maryland</div>
+                        </div>
+                    </div>
+                    <div class="experience-description">
+                        <ul>
+                            <li>Improved quality process efficiency through real-time data analysis and workflow automation solutions</li>
+                            <li>Designed and maintained interactive dashboards using Excel, Power BI, and Smartsheet for KPI monitoring</li>
+                            <li>Automated monthly reporting workflows, reducing data preparation time significantly</li>
+                            <li>Extracted and analyzed calibration records from SAP ERP, driving increased data accuracy</li>
+                            <li>Implemented IT workflows using Power Automate and SharePoint, enhancing operational efficiency</li>
+                        </ul>
                     </div>
                 </div>
-                <div class="experience-description">
-                    <ul>
-                        <li>Improved quality process efficiency through real-time data analysis and workflow automation solutions</li>
-                        <li>Designed and maintained interactive dashboards using Excel, Power BI, and Smartsheet for KPI monitoring</li>
-                        <li>Automated monthly reporting workflows, reducing data preparation time significantly</li>
-                        <li>Extracted and analyzed calibration records from SAP ERP, driving increased data accuracy</li>
-                        <li>Implemented IT workflows using Power Automate and SharePoint, enhancing operational efficiency</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="experience-card">
-                <div class="experience-header">
-                    <div class="company-icon">ACC</div>
-                    <div class="experience-info">
-                        <h3>Quality Engineering Analyst</h3>
-                        <div class="experience-company">Accenture | Core Banking</div>
-                        <div class="experience-date">August 2021 - December 2023 | Pune, India</div>
+                <div class="experience-card">
+                    <div class="experience-header">
+                        <div class="company-icon">ACC</div>
+                        <div class="experience-info">
+                            <h3>Quality Engineering Analyst</h3>
+                            <div class="experience-company">Accenture | Core Banking</div>
+                            <div class="experience-date">August 2021 - December 2023 | Pune, India</div>
+                        </div>
+                    </div>
+                    <div class="experience-description">
+                        <ul>
+                            <li>Directed strategic management of testing activities, boosting overall testing efficiency by 25%</li>
+                            <li>Created Business Process Flow and Knowledge Transfer Documents, improving clarity by 30%</li>
+                            <li>Elevated Test Script Design and Defect Management, yielding 20% reduction in defect rates</li>
+                            <li>Streamlined onboarding framework, accelerating new team member ramp-up time by 40%</li>
+                            <li>Facilitated collaboration with Development teams, improving defect detection rates by 15%</li>
+                        </ul>
                     </div>
                 </div>
-                <div class="experience-description">
-                    <ul>
-                        <li>Directed strategic management of testing activities, boosting overall testing efficiency by 25%</li>
-                        <li>Created Business Process Flow and Knowledge Transfer Documents, improving clarity by 30%</li>
-                        <li>Elevated Test Script Design and Defect Management, yielding 20% reduction in defect rates</li>
-                        <li>Streamlined onboarding framework, accelerating new team member ramp-up time by 40%</li>
-                        <li>Facilitated collaboration with Development teams, improving defect detection rates by 15%</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="experience-card">
-                <div class="experience-header">
-                    <div class="company-icon">SD</div>
-                    <div class="experience-info">
-                        <h3>Project Management Intern</h3>
-                        <div class="experience-company">Simba Developers</div>
-                        <div class="experience-date">February 2021 - May 2021 | Pune, India</div>
+                <div class="experience-card">
+                    <div class="experience-header">
+                        <div class="company-icon">SD</div>
+                        <div class="experience-info">
+                            <h3>Project Management Intern</h3>
+                            <div class="experience-company">Simba Developers</div>
+                            <div class="experience-date">February 2021 - May 2021 | Pune, India</div>
+                        </div>
+                    </div>
+                    <div class="experience-description">
+                        <ul>
+                            <li>Orchestrated management of project timelines for 2+ ongoing projects with 95% deadline adherence</li>
+                            <li>Assessed project workflows and implemented process improvements</li>
+                            <li>Achieved 25% reduction in bottlenecks and 18% increase in team productivity</li>
+                        </ul>
                     </div>
                 </div>
-                <div class="experience-description">
-                    <ul>
-                        <li>Orchestrated management of project timelines for 2+ ongoing projects with 95% deadline adherence</li>
-                        <li>Assessed project workflows and implemented process improvements</li>
-                        <li>Achieved 25% reduction in bottlenecks and 18% increase in team productivity</li>
-                    </ul>
+            </div>
+        </section>
+        <footer class="footer">
+            <p>&copy; 2025 Mrunal Vinay Jadhav. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <!-- Projects Page -->
+    <div class="page" id="projects-page">
+        <section class="section">
+            <div class="section-header"><div class="section-icon">🚀</div><h2 class="section-title">Projects</h2></div>
+            <div class="projects-grid">
+                <a href="https://github.com/MrunalJadhav2025/Cyber-Security-Threat-Detection-Using-Big-Data.git" target="_blank" class="project-card">
+                    <div class="project-image">🔒</div>
+                    <div class="project-content">
+                        <h3 class="project-title">Cyber Security Threat Detection</h3>
+                        <div class="project-tech">Python • PySpark • XGBoost • Apache Spark</div>
+                        <p class="project-description">Constructed scalable threat detection system achieving 86.8% accuracy in classifying IoT attacks using big data processing and machine learning techniques.</p>
+                    </div>
+                </a>
+                <a href="https://github.com/MrunalJadhav2025/Employee-Departure-Prediction-Using-Semi-Supervised-Learning.git" target="_blank" class="project-card">
+                    <div class="project-image">📊</div>
+                    <div class="project-content">
+                        <h3 class="project-title">Employee Departure Prediction</h3>
+                        <div class="project-tech">Python • KMeans • PCA • Logistic Regression</div>
+                        <p class="project-description">Formulated semi-supervised learning approach growing label coverage by 70% and achieving 80% predictive accuracy in low-label conditions.</p>
+                    </div>
+                </a>
+                <a href="https://github.com/MrunalJadhav2025/Credit-Card-Fraud-Detection.git" target="_blank" class="project-card">
+                    <div class="project-image">💳</div>
+                    <div class="project-content">
+                        <h3 class="project-title">Credit Card Fraud Detection</h3>
+                        <div class="project-tech">Python • Machine Learning • Isolation Forest</div>
+                        <p class="project-description">Designed fraud detection system utilizing advanced ML techniques achieving 99% classification accuracy with minimal false positives.</p>
+                    </div>
+                </a>
+            </div>
+        </section>
+        <footer class="footer">
+            <p>&copy; 2025 Mrunal Vinay Jadhav. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <!-- Education Page -->
+    <div class="page" id="education-page">
+        <section class="section">
+            <div class="section-header"><div class="section-icon">🎓</div><h2 class="section-title">Education</h2></div>
+            <div class="education-grid">
+                <div class="education-card">
+                    <h3>Master's in Engineering Management</h3>
+                    <div class="education-institution">University of Maryland, Baltimore County</div>
+                    <div class="education-date">December 2025</div>
+                    <p class="education-description">Specialization: Data Science<br>Coursework: Advanced Project Management, Data Management, Machine Learning, Big Data Processing</p>
+                </div>
+                <div class="education-card">
+                    <h3>Bachelor's in Computer Engineering</h3>
+                    <div class="education-institution">Savitribai Phule Pune University, India</div>
+                    <div class="education-date">July 2021</div>
+                    <p class="education-description">Coursework: Data Structures & Algorithms, Software Engineering, Software Testing & QA, AI & Robotics</p>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+        <footer class="footer">
+            <p>&copy; 2025 Mrunal Vinay Jadhav. All rights reserved.</p>
+        </footer>
+    </div>
 
-    <section class="section" id="projects">
-        <div class="section-header"><div class="section-icon">🚀</div><h2 class="section-title">Projects</h2></div>
-        <div class="projects-grid">
-            <a href="https://github.com/MrunalJadhav2025/Cyber-Security-Threat-Detection-Using-Big-Data.git" target="_blank" class="project-card">
-                <div class="project-image">🔒</div>
-                <div class="project-content">
-                    <h3 class="project-title">Cyber Security Threat Detection</h3>
-                    <div class="project-tech">Python • PySpark • XGBoost • Apache Spark</div>
-                    <p class="project-description">Constructed scalable threat detection system achieving 86.8% accuracy in classifying IoT attacks using big data processing and machine learning techniques.</p>
-                </div>
-            </a>
-            <a href="https://github.com/MrunalJadhav2025/Employee-Departure-Prediction-Using-Semi-Supervised-Learning.git" target="_blank" class="project-card">
-                <div class="project-image">📊</div>
-                <div class="project-content">
-                    <h3 class="project-title">Employee Departure Prediction</h3>
-                    <div class="project-tech">Python • KMeans • PCA • Logistic Regression</div>
-                    <p class="project-description">Formulated semi-supervised learning approach growing label coverage by 70% and achieving 80% predictive accuracy in low-label conditions.</p>
-                </div>
-            </a>
-            <a href="https://github.com/MrunalJadhav2025/Credit-Card-Fraud-Detection.git" target="_blank" class="project-card">
-                <div class="project-image">💳</div>
-                <div class="project-content">
-                    <h3 class="project-title">Credit Card Fraud Detection</h3>
-                    <div class="project-tech">Python • Machine Learning • Isolation Forest</div>
-                    <p class="project-description">Designed fraud detection system utilizing advanced ML techniques achieving 99% classification accuracy with minimal false positives.</p>
-                </div>
-            </a>
-        </div>
-    </section>
-
-    <section class="section" id="skills">
-        <div class="section-header"><div class="section-icon">⚡</div><h2 class="section-title">Skills</h2></div>
-        <div class="skills-grid">
-            <div class="skill-card"><div class="skill-icon">🐍</div><div class="skill-name">Python</div><div class="skill-category">Programming</div></div>
-            <div class="skill-card"><div class="skill-icon">💾</div><div class="skill-name">SQL</div><div class="skill-category">Database</div></div>
-            <div class="skill-card"><div class="skill-icon">📈</div><div class="skill-name">Power BI</div><div class="skill-category">Analytics</div></div>
-            <div class="skill-card"><div class="skill-icon">🔧</div><div class="skill-name">SAP</div><div class="skill-category">ERP</div></div>
-            <div class="skill-card"><div class="skill-icon">☕</div><div class="skill-name">Java</div><div class="skill-category">Programming</div></div>
-        </div>
-    </section>
-
-    <section class="section" id="certifications">
-        <div class="section-header"><div class="section-icon">🏆</div><h2 class="section-title">Certifications</h2></div>
-        <div class="certifications-grid">
-            <div class="certification-card"><div class="cert-icon">🤖</div><div class="cert-info"><div class="cert-name">Automation Engineer - AI and Data Analytics</div><div class="cert-issuer">Professional Certification</div></div></div>
-            <div class="certification-card"><div class="cert-icon">☕</div><div class="cert-info"><div class="cert-name">Java Programming</div><div class="cert-issuer">Professional Certification</div></div></div>
-            <div class="certification-card"><div class="cert-icon">💾</div><div class="cert-info"><div class="cert-name">MySQL</div><div class="cert-issuer">Professional Certification</div></div></div>
-            <div class="certification-card"><div class="cert-icon">🐍</div><div class="cert-info"><div class="cert-name">Python Programming</div><div class="cert-issuer">Professional Certification</div></div></div>
-            <div class="certification-card"><div class="cert-icon">🧪</div><div class="cert-info"><div class="cert-name">Software Testing</div><div class="cert-issuer">Professional Certification</div></div></div>
-            <div class="certification-card"><div class="cert-icon">🔄</div><div class="cert-info"><div class="cert-name">Agile Methodology</div><div class="cert-issuer">Professional Certification</div></div></div>
-            <div class="certification-card"><div class="cert-icon">📱</div><div class="cert-info"><div class="cert-name">Fundamentals of Digital Marketing</div><div class="cert-issuer">Google</div></div></div>
-            <div class="certification-card"><div class="cert-icon">🏦</div><div class="cert-info"><div class="cert-name">Banking Foundation</div><div class="cert-issuer">Professional Certification</div></div></div>
-        </div>
-    </section>
-
-        <section class="section" id="education">
-        <div class="section-header"><div class="section-icon">🎓</div><h2 class="section-title">Education</h2></div>
-        <div class="education-grid">
-            <div class="education-card">
-                <h3>Master's in Engineering Management</h3>
-                <div class="education-institution">University of Maryland, Baltimore County</div>
-                <div class="education-date">December 2025</div>
-                <p class="education-description">Specialization: Data Science<br>Coursework: Advanced Project Management, Data Management, Machine Learning, Big Data Processing</p>
-            </div>
-            <div class="education-card">
-                <h3>Bachelor's in Computer Engineering</h3>
-                <div class="education-institution">Savitribai Phule Pune University, India</div>
-                <div class="education-date">July 2021</div>
-                <p class="education-description">Coursework: Data Structures & Algorithms, Software Engineering, Software Testing & QA, AI & Robotics</p>
-            </div>
-        </div>
-    </section>
-
-    <section class="section" id="research">
-        <div class="section-header"><div class="section-icon">📚</div><h2 class="section-title">Research & Publications</h2></div>
-        <div class="research-grid">
-            <div class="research-card">
-                <div class="research-header">
-                    <div class="research-icon">📄</div>
-                    <div class="research-info">
-                        <h3>Clustering Analytics For Smart Grid Datasets</h3>
-                        <div class="research-type">Research Paper</div>
+    <!-- Skills Page -->
+    <div class="page" id="skills-page">
+        <section class="section">
+            <div class="section-header"><div class="section-icon">⚡</div><h2 class="section-title">Skills & Expertise</h2></div>
+            <div class="skills-categories">
+                <div class="skill-category-card">
+                    <h3 class="skill-category-title">
+                        <span class="category-icon">💻</span>
+                        Data, Programming and Analytics
+                    </h3>
+                    <div class="skill-items">
+                        <div class="skill-item"><span class="skill-bullet">•</span>Python, R, SQL</div>
+                        <div class="skill-item"><span class="skill-bullet">•</span>Tableau, Power BI</div>
+                        <div class="skill-item"><span class="skill-bullet">•</span>C++, Java, SAP</div>
+                        <div class="skill-item"><span class="skill-bullet">•</span>HTML, CSS, JavaScript</div>
+                        <div class="skill-item"><span class="skill-bullet">•</span>MySQL, MongoDB, Oracle PL/SQL</div>
+                        <div class="skill-item"><span class="skill-bullet">•</span>Data Analytics and Visualization</div>
                     </div>
                 </div>
-                <a href="Clustering.pdf" class="research-link">Read Full Paper<i class="fas fa-arrow-right"></i></a>
-            </div>
-            <div class="research-card">
-                <div class="research-header">
-                    <div class="research-icon">🔍</div>
-                    <div class="research-info">
-                        <h3>Boeing 737 Max Problem</h3>
-                        <div class="research-type">Case Study</div>
+                <div class="skill-category-card">
+                    <h3 class="skill-category-title">
+                        <span class="category-icon">📋</span>
+                        Project Management
+                    </h3>
+                    <div class="skill-items">
+                        <div class="skill-item"><span class="skill-bullet">•</span>MS Office Suite (Word, Excel, PowerPoint)</div>
+                        <div class="skill-item"><span class="skill-bullet">•</span>SharePoint, Smartsheet, Power Automate</div>
+                        <div class="skill-item"><span class="skill-bullet">•</span>Process Improvement, Business Analysis, Requirements Gathering</div>
+                        <div class="skill-item"><span class="skill-bullet">•</span>Strategic Planning, Stakeholder Coordination, Risk Management</div>
                     </div>
                 </div>
-                <a href="Boeing.pdf" class="research-link">View Case Study<i class="fas fa-arrow-right"></i></a>
+                <div class="skill-category-card">
+                    <h3 class="skill-category-title">
+                        <span class="category-icon">🧪</span>
+                        Software Testing
+                    </h3>
+                    <div class="skill-items">
+                        <div class="skill-item"><span class="skill-bullet">•</span>JIRA, Confluence, Test Planning</div>
+                        <div class="skill-item"><span class="skill-bullet">•</span>Functional & Regression Testing</div>
+                        <div class="skill-item"><span class="skill-bullet">•</span>Automation Testing, SDLC</div>
+                        <div class="skill-item"><span class="skill-bullet">•</span>Agile and Scrum Methodologies</div>
+                        <div class="skill-item"><span class="skill-bullet">•</span>Selenium, Defect Management</div>
+                    </div>
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
+        <footer class="footer">
+            <p>&copy; 2025 Mrunal Vinay Jadhav. All rights reserved.</p>
+        </footer>
+    </div>
 
-    <section class="contact-section" id="contact">
-        <div class="section-header" style="justify-content: center;"><div class="section-icon">📧</div><h2 class="section-title">Contact</h2></div>
-        <h2>Let's Get in Touch!</h2>
-        <p class="contact-description">I'm always open to discussing new opportunities, collaborations, or just connecting. Feel free to reach out!</p>
-        <div class="contact-buttons">
-            <a href="mailto:mrunaljadhav739@gmail.com" class="contact-btn"><i class="fas fa-envelope"></i>Email Me</a>
-            <a href="https://linkedin.com/in/mrunal-jadhav-428806193" target="_blank" class="contact-btn"><i class="fab fa-linkedin"></i>LinkedIn</a>
-            <a href="https://github.com/MrunalJadhav2025" target="_blank" class="contact-btn"><i class="fab fa-github"></i>GitHub</a>
-            <a href="tel:6674500861" class="contact-btn"><i class="fas fa-phone"></i>Call Me: 667-450-0861</a>
-        </div>
-    </section>
+    <!-- Research Page -->
+    <div class="page" id="research-page">
+        <section class="section">
+            <div class="section-header"><div class="section-icon">📚</div><h2 class="section-title">Research & Publications</h2></div>
+            <div class="research-grid">
+                <div class="research-card">
+                    <div class="research-header">
+                        <div class="research-icon">📄</div>
+                        <div class="research-info">
+                            <h3>Clustering Analytics For Smart Grid Datasets</h3>
+                            <div class="research-type">Research Paper</div>
+                        </div>
+                    </div>
+                    <a href="Clustering.pdf" class="research-link">Read Full Paper<i class="fas fa-arrow-right"></i></a>
+                </div>
+                <div class="research-card">
+                    <div class="research-header">
+                        <div class="research-icon">🔍</div>
+                        <div class="research-info">
+                            <h3>Boeing 737 Max Problem</h3>
+                            <div class="research-type">Case Study</div>
+                        </div>
+                    </div>
+                    <a href="Boeing.pdf" class="research-link">View Case Study<i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+        </section>
+        <footer class="footer">
+            <p>&copy; 2025 Mrunal Vinay Jadhav. All rights reserved.</p>
+        </footer>
+    </div>
 
-  <footer class="footer">
-        <p>&copy; 2025 Mrunal Vinay Jadhav. All rights reserved.</p>
-        <p style="margin-top: 10px;">Baltimore, Maryland</p>
-    </footer>
+    <!-- Certifications Page -->
+    <div class="page" id="certifications-page">
+        <section class="section">
+            <div class="section-header"><div class="section-icon">🏆</div><h2 class="section-title">Certifications</h2></div>
+            <div class="certifications-grid">
+                <div class="certification-card"><div class="cert-icon">🤖</div><div class="cert-info"><div class="cert-name">Automation Engineer - AI and Data Analytics</div><div class="cert-issuer">Professional Certification</div></div></div>
+                <div class="certification-card"><div class="cert-icon">☕</div><div class="cert-info"><div class="cert-name">Java Programming</div><div class="cert-issuer">Professional Certification</div></div></div>
+                <div class="certification-card"><div class="cert-icon">💾</div><div class="cert-info"><div class="cert-name">MySQL</div><div class="cert-issuer">Professional Certification</div></div></div>
+                <div class="certification-card"><div class="cert-icon">🐍</div><div class="cert-info"><div class="cert-name">Python Programming</div><div class="cert-issuer">Professional Certification</div></div></div>
+                <div class="certification-card"><div class="cert-icon">🧪</div><div class="cert-info"><div class="cert-name">Software Testing</div><div class="cert-issuer">Professional Certification</div></div></div>
+                <div class="certification-card"><div class="cert-icon">🔄</div><div class="cert-info"><div class="cert-name">Agile Methodology</div><div class="cert-issuer">Professional Certification</div></div></div>
+                <div class="certification-card"><div class="cert-icon">📱</div><div class="cert-info"><div class="cert-name">Fundamentals of Digital Marketing</div><div class="cert-issuer">Google</div></div></div>
+                <div class="certification-card"><div class="cert-icon">🏦</div><div class="cert-info"><div class="cert-name">Banking Foundation</div><div class="cert-issuer">Professional Certification</div></div></div>
+            </div>
+        </section>
+        <footer class="footer">
+            <p>&copy; 2025 Mrunal Vinay Jadhav. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <!-- Contact Page -->
+    <div class="page" id="contact-page">
+        <section class="contact-section">
+            <div class="section-header" style="justify-content: center;"><div class="section-icon">📧</div><h2 class="section-title">Contact</h2></div>
+            <h2>Let's Get in Touch!</h2>
+            <p class="contact-description">I'm always open to discussing new opportunities, collaborations, or just connecting. Feel free to reach out!</p>
+            <div class="contact-buttons">
+                <a href="mailto:mrunaljadhav739@gmail.com" class="contact-btn"><i class="fas fa-envelope"></i>Email Me</a>
+                <a href="https://linkedin.com/in/mrunal-jadhav-428806193" target="_blank" class="contact-btn"><i class="fab fa-linkedin"></i>LinkedIn</a>
+                <a href="https://github.com/MrunalJadhav2025" target="_blank" class="contact-btn"><i class="fab fa-github"></i>GitHub</a>
+                <a href="tel:6674500861" class="contact-btn"><i class="fas fa-phone"></i>Call Me: 667-450-0861</a>
+            </div>
+        </section>
+        <footer class="footer">
+            <p>&copy; 2025 Mrunal Vinay Jadhav. All rights reserved.</p>
+            <p style="margin-top: 10px;">Baltimore, Maryland</p>
+        </footer>
+    </div>
 
     <script>
-        // Smooth scrolling
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
+        function showPage(pageId) {
+            // Hide all pages
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
             });
-        });
+            
+            // Show selected page
+            document.getElementById(pageId + '-page').classList.add('active');
+            
+            // Update nav active state
+            document.querySelectorAll('.nav-links a[data-page]').forEach(link => {
+                link.classList.remove('active');
+            });
+            document.querySelector(`[data-page="${pageId}"]`)?.classList.add('active');
+            
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
 
-        // Scroll animations
+        // Animation on scroll
         const observerOptions = {
             threshold: 0.1,
             rootMargin: '0px 0px -100px 0px'
@@ -339,7 +431,7 @@
             });
         }, observerOptions);
 
-        document.querySelectorAll('.experience-card, .project-card, .education-card, .skill-card').forEach(el => {
+        document.querySelectorAll('.experience-card, .project-card, .education-card, .skill-category-card, .certification-card, .research-card').forEach(el => {
             el.style.opacity = '0';
             el.style.transform = 'translateY(30px)';
             el.style.transition = 'all 0.6s ease';
