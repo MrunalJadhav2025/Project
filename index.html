@@ -7,501 +7,92 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background: #0a0a0a;
-            color: #e0e0e0;
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-
-        .navbar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            padding: 20px 60px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: rgba(10, 10, 10, 0.8);
-            backdrop-filter: blur(20px);
-            z-index: 1000;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        .logo {
-            font-size: 1.2em;
-            font-weight: 700;
-            color: #fff;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 40px;
-            align-items: center;
-        }
-
-        .nav-links a {
-            color: #999;
-            text-decoration: none;
-            font-size: 0.95em;
-            font-weight: 500;
-            transition: color 0.3s;
-        }
-
-        .nav-links a:hover {
-            color: #fff;
-        }
-
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            padding: 120px 60px 60px;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        .hero-content {
-            max-width: 800px;
-        }
-
-        .wave-emoji {
-            font-size: 3em;
-            display: inline-block;
-            animation: wave 2s ease-in-out infinite;
-        }
-
-        @keyframes wave {
-            0%, 100% { transform: rotate(0deg); }
-            10%, 30% { transform: rotate(14deg); }
-            20% { transform: rotate(-8deg); }
-            40% { transform: rotate(-4deg); }
-            50% { transform: rotate(10deg); }
-        }
-
-        .greeting {
-            color: #666;
-            font-size: 1.1em;
-            margin-bottom: 15px;
-            font-weight: 500;
-        }
-
-        .hero h1 {
-            font-size: 5em;
-            font-weight: 800;
-            color: #fff;
-            line-height: 1.1;
-            margin-bottom: 20px;
-            letter-spacing: -0.02em;
-        }
-
-        .hero .location {
-            color: #999;
-            font-size: 1.3em;
-            margin-bottom: 30px;
-            font-weight: 400;
-        }
-
-        .hero-description {
-            font-size: 1.15em;
-            color: #999;
-            max-width: 700px;
-            line-height: 1.5;
-            margin-bottom: 40px;
-            text-align: justify;
-            
-        }
-
-        .stats {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 40px;
-            margin: 80px 0;
-        }
-
-        .stat-item {
-            text-align: center;
-        }
-
-        .stat-number {
-            font-size: 3.5em;
-            font-weight: 800;
-            color: #fff;
-            line-height: 1;
-            margin-bottom: 10px;
-        }
-
-        .stat-label {
-            color: #666;
-            font-size: 0.95em;
-            font-weight: 500;
-        }
-
-        .section {
-            padding: 100px 60px;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        .section-header {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 60px;
-        }
-
-        .section-icon {
-            width: 50px;
-            height: 50px;
-            background: #1a1a1a;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5em;
-        }
-
-        .section-title {
-            font-size: 2.5em;
-            font-weight: 700;
-            color: #fff;
-        }
-        
-        .download-btn {
-            background: white;
-            padding: 8px 20px;
-            border-radius: 25px;
-            color: black;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 0.9em;
-            transition: all 0.3s ease;
-        }
-
-        .download-btn:hover {
-            background: #a8031f;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(210, 4, 45, 0.4);
-        }
-
-        .experience-grid {
-            display: grid;
-            gap: 30px;
-        }
-
-        .experience-card {
-            background: #111;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 20px;
-            padding: 40px;
-            transition: all 0.3s ease;
-        }
-
-        .experience-card:hover {
-            background: #151515;
-            border-color: rgba(255, 255, 255, 0.1);
-            transform: translateY(-5px);
-        }
-
-        .experience-header {
-            display: flex;
-            align-items: flex-start;
-            gap: 20px;
-            margin-bottom: 20px;
-        }
-
-        .company-icon {
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #fff;
-            font-weight: 700;
-            font-size: 1.5em;
-            flex-shrink: 0;
-        }
-
-        .experience-info h3 {
-            font-size: 1.5em;
-            color: #fff;
-            margin-bottom: 5px;
-            font-weight: 600;
-        }
-
-        .experience-company {
-            color: #667eea;
-            font-weight: 600;
-            margin-bottom: 5px;
-        }
-
-        .experience-date {
-            color: #666;
-            font-size: 0.9em;
-        }
-
-        .experience-description {
-            color: #999;
-            line-height: 1.8;
-        }
-
-        .experience-description ul {
-            list-style: none;
-            margin-top: 15px;
-        }
-
-        .experience-description li {
-            padding-left: 25px;
-            position: relative;
-            margin-bottom: 10px;
-        }
-
-        .experience-description li:before {
-            content: '→';
-            position: absolute;
-            left: 0;
-            color: #667eea;
-        }
-
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 30px;
-        }
-
-        .project-card {
-            background: #111;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 20px;
-            overflow: hidden;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            color: inherit;
-            display: block;
-        }
-
-        .project-card:hover {
-            border-color: rgba(255, 255, 255, 0.1);
-            transform: translateY(-5px);
-        }
-
-        .project-image {
-            width: 100%;
-            height: 220px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 3em;
-            color: rgba(255, 255, 255, 0.3);
-        }
-
-        .project-content {
-            padding: 30px;
-        }
-
-        .project-title {
-            font-size: 1.3em;
-            font-weight: 600;
-            color: #fff;
-            margin-bottom: 10px;
-        }
-
-        .project-tech {
-            color: #667eea;
-            font-size: 0.9em;
-            margin-bottom: 15px;
-            font-weight: 500;
-        }
-
-        .project-description {
-            color: #999;
-            line-height: 1.6;
-            font-size: 0.95em;
-        }
-
-        .education-grid {
-            display: grid;
-            gap: 30px;
-        }
-
-        .education-card {
-            background: #111;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 20px;
-            padding: 40px;
-            transition: all 0.3s ease;
-        }
-
-        .education-card:hover {
-            background: #151515;
-            border-color: rgba(255, 255, 255, 0.1);
-            transform: translateY(-5px);
-        }
-
-        .education-card h3 {
-            font-size: 1.5em;
-            color: #fff;
-            margin-bottom: 10px;
-            font-weight: 600;
-        }
-
-        .education-institution {
-            color: #667eea;
-            font-weight: 600;
-            margin-bottom: 5px;
-        }
-
-        .education-date {
-            color: #666;
-            font-size: 0.9em;
-            margin-bottom: 15px;
-        }
-
-        .education-description {
-            color: #999;
-            line-height: 1.8;
-        }
-
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-        }
-
-        .skill-card {
-            background: #111;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 16px;
-            padding: 30px 25px;
-            text-align: center;
-            transition: all 0.3s ease;
-        }
-
-        .skill-card:hover {
-            background: #151515;
-            border-color: rgba(255, 255, 255, 0.1);
-            transform: translateY(-5px);
-        }
-
-        .skill-icon {
-            font-size: 2.5em;
-            margin-bottom: 15px;
-        }
-
-        .skill-name {
-            font-size: 1em;
-            color: #fff;
-            font-weight: 600;
-            margin-bottom: 5px;
-        }
-
-        .skill-category {
-            color: #666;
-            font-size: 0.85em;
-        }
-
-        .contact-section {
-            text-align: center;
-            padding: 120px 60px;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .contact-section h2 {
-            font-size: 3.5em;
-            font-weight: 800;
-            color: #fff;
-            margin-bottom: 20px;
-        }
-
-        .contact-description {
-            font-size: 1.15em;
-            color: #999;
-            margin-bottom: 40px;
-        }
-
-        .contact-buttons {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .contact-btn {
-            padding: 15px 35px;
-            background: #111;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            color: #fff;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .contact-btn:hover {
-            background: #667eea;
-            border-color: #667eea;
-            transform: translateY(-3px);
-        }
-
-        .footer {
-            text-align: center;
-            padding: 40px;
-            color: #666;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0a0a0a; color: #e0e0e0; line-height: 1.6; overflow-x: hidden; }
+        .navbar { position: fixed; top: 0; left: 0; right: 0; padding: 20px 60px; display: flex; justify-content: space-between; align-items: center; background: rgba(10, 10, 10, 0.8); backdrop-filter: blur(20px); z-index: 1000; border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
+        .logo { font-size: 1.2em; font-weight: 700; color: #fff; }
+        .nav-links { display: flex; gap: 40px; align-items: center; }
+        .nav-links a { color: #999; text-decoration: none; font-size: 0.95em; font-weight: 500; transition: color 0.3s; }
+        .nav-links a:hover { color: #fff; }
+        .hero { min-height: 100vh; display: flex; align-items: center; justify-content: space-between; padding: 120px 60px 60px; max-width: 1400px; margin: 0 auto; gap: 60px; }
+        .hero-content { max-width: 800px; flex: 1; }
+        .hero-image-container { flex-shrink: 0; width: 350px; height: 350px; position: relative; }
+        .hero-image { width: 100%; height: 100%; border-radius: 20px; object-fit: cover; border: 2px solid rgba(255, 255, 255, 0.1); box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5); }
+        .image-placeholder { width: 100%; height: 100%; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 20px; display: flex; align-items: center; justify-content: center; font-size: 8em; border: 2px solid rgba(255, 255, 255, 0.1); box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5); }
+        .wave-emoji { font-size: 3em; display: inline-block; animation: wave 2s ease-in-out infinite; }
+        @keyframes wave { 0%, 100% { transform: rotate(0deg); } 10%, 30% { transform: rotate(14deg); } 20% { transform: rotate(-8deg); } 40% { transform: rotate(-4deg); } 50% { transform: rotate(10deg); } }
+        .greeting { color: #666; font-size: 1.1em; margin-bottom: 15px; font-weight: 500; }
+        .hero h1 { font-size: 5em; font-weight: 800; color: #fff; line-height: 1.1; margin-bottom: 20px; letter-spacing: -0.02em; }
+        .hero .location { color: #999; font-size: 1.3em; margin-bottom: 30px; font-weight: 400; }
+        .hero-description { font-size: 1.15em; color: #999; max-width: 700px; line-height: 1.5; margin-bottom: 40px; text-align: justify; }
+        .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px; margin: 80px 0; }
+        .stat-item { text-align: center; }
+        .stat-number { font-size: 3.5em; font-weight: 800; color: #fff; line-height: 1; margin-bottom: 10px; }
+        .stat-label { color: #666; font-size: 0.95em; font-weight: 500; }
+        .section { padding: 100px 60px; max-width: 1400px; margin: 0 auto; }
+        .section-header { display: flex; align-items: center; gap: 15px; margin-bottom: 60px; }
+        .section-icon { width: 50px; height: 50px; background: #1a1a1a; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5em; }
+        .section-title { font-size: 2.5em; font-weight: 700; color: #fff; }
+        .download-btn { background: white; padding: 8px 20px; border-radius: 25px; color: black; text-decoration: none; font-weight: 600; font-size: 0.9em; transition: all 0.3s ease; }
+        .download-btn:hover { background: #a8031f; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(210, 4, 45, 0.4); }
+        .experience-grid, .education-grid, .research-grid { display: grid; gap: 30px; }
+        .experience-card, .education-card, .research-card { background: #111; border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 20px; padding: 40px; transition: all 0.3s ease; }
+        .experience-card:hover, .education-card:hover, .research-card:hover { background: #151515; border-color: rgba(255, 255, 255, 0.1); transform: translateY(-5px); }
+        .experience-header, .research-header { display: flex; align-items: flex-start; gap: 20px; margin-bottom: 20px; }
+        .company-icon, .research-icon { width: 60px; height: 60px; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 700; font-size: 1.5em; flex-shrink: 0; }
+        .company-icon { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .research-icon { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); font-size: 1.8em; }
+        .experience-info h3, .research-info h3, .education-card h3 { font-size: 1.5em; color: #fff; margin-bottom: 5px; font-weight: 600; }
+        .experience-company, .education-institution { color: #667eea; font-weight: 600; margin-bottom: 5px; }
+        .research-type { color: #f5576c; font-weight: 600; margin-bottom: 5px; font-size: 0.95em; }
+        .experience-date, .education-date, .research-date { color: #666; font-size: 0.9em; }
+        .education-date { margin-bottom: 15px; }
+        .experience-description, .education-description, .research-description { color: #999; line-height: 1.8; }
+        .research-description { margin-bottom: 15px; }
+        .experience-description ul { list-style: none; margin-top: 15px; }
+        .experience-description li { padding-left: 25px; position: relative; margin-bottom: 10px; }
+        .experience-description li:before { content: '→'; position: absolute; left: 0; color: #667eea; }
+        .research-link { display: inline-flex; align-items: center; gap: 8px; color: #f5576c; text-decoration: none; font-weight: 600; font-size: 0.95em; transition: all 0.3s ease; }
+        .research-link:hover { color: #fff; gap: 12px; }
+        .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 30px; }
+        .project-card { background: #111; border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 20px; overflow: hidden; transition: all 0.3s ease; text-decoration: none; color: inherit; display: block; }
+        .project-card:hover { border-color: rgba(255, 255, 255, 0.1); transform: translateY(-5px); }
+        .project-image { width: 100%; height: 220px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); display: flex; align-items: center; justify-content: center; font-size: 3em; color: rgba(255, 255, 255, 0.3); }
+        .project-content { padding: 30px; }
+        .project-title { font-size: 1.3em; font-weight: 600; color: #fff; margin-bottom: 10px; }
+        .project-tech { color: #667eea; font-size: 0.9em; margin-bottom: 15px; font-weight: 500; }
+        .project-description { color: #999; line-height: 1.6; font-size: 0.95em; }
+        .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
+        .skill-card { background: #111; border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 16px; padding: 30px 25px; text-align: center; transition: all 0.3s ease; }
+        .skill-card:hover { background: #151515; border-color: rgba(255, 255, 255, 0.1); transform: translateY(-5px); }
+        .skill-icon { font-size: 2.5em; margin-bottom: 15px; }
+        .skill-name { font-size: 1em; color: #fff; font-weight: 600; margin-bottom: 5px; }
+        .skill-category { color: #666; font-size: 0.85em; }
+        .certifications-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; }
+        .certification-card { background: #111; border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 16px; padding: 30px; transition: all 0.3s ease; display: flex; align-items: center; gap: 20px; }
+        .certification-card:hover { background: #151515; border-color: rgba(255, 255, 255, 0.1); transform: translateY(-5px); }
+        .cert-icon { width: 50px; height: 50px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5em; flex-shrink: 0; }
+        .cert-info { flex: 1; }
+        .cert-name { font-size: 1.05em; color: #fff; font-weight: 600; margin-bottom: 5px; line-height: 1.3; }
+        .cert-issuer { color: #666; font-size: 0.85em; }
+        .contact-section { text-align: center; padding: 120px 60px; max-width: 800px; margin: 0 auto; }
+        .contact-section h2 { font-size: 3.5em; font-weight: 800; color: #fff; margin-bottom: 20px; }
+        .contact-description { font-size: 1.15em; color: #999; margin-bottom: 40px; }
+        .contact-buttons { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; }
+        .contact-btn { padding: 15px 35px; background: #111; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; color: #fff; text-decoration: none; font-weight: 600; transition: all 0.3s ease; display: flex; align-items: center; gap: 10px; }
+        .contact-btn:hover { background: #667eea; border-color: #667eea; transform: translateY(-3px); }
+        .footer { text-align: center; padding: 40px; color: #666; border-top: 1px solid rgba(255, 255, 255, 0.05); }
         @media (max-width: 768px) {
-            .navbar {
-                padding: 20px 30px;
-            }
-
-            .nav-links {
-                display: none;
-            }
-
-            .hero {
-                padding: 100px 30px 40px;
-            }
-
-            .hero h1 {
-                font-size: 3em;
-            }
-
-            .stats {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 30px;
-            }
-
-            .section {
-                padding: 60px 30px;
-            }
-
-            .projects-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .skills-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .contact-section h2 {
-                font-size: 2.5em;
-            }
+            .navbar { padding: 20px 30px; }
+            .nav-links { display: none; }
+            .hero { padding: 100px 30px 40px; flex-direction: column-reverse; }
+            .hero-image-container { width: 250px; height: 250px; }
+            .hero h1 { font-size: 3em; }
+            .stats { grid-template-columns: repeat(2, 1fr); gap: 30px; }
+            .section { padding: 60px 30px; }
+            .projects-grid { grid-template-columns: 1fr; }
+            .skills-grid { grid-template-columns: repeat(2, 1fr); }
+            .contact-section h2 { font-size: 2.5em; }
         }
     </style>
 </head>
@@ -515,6 +106,8 @@
             <a href="#projects">Projects</a>
             <a href="#education">Education</a>
             <a href="#skills">Skills</a>
+            <a href="#research">Research</a>
+            <a href="#certifications">Certifications</a>
             <a href="#contact">Contact</a>
         </div>
     </nav>
@@ -525,36 +118,23 @@
             <h1>I'm Mrunal Jadhav,</h1>
             <p class="location">Based in Washington DC - Baltimore Area.</p>
             <p class="hero-description">
-                I’m a results-driven professional passionate about data, quality, and project management, with expertise in transforming complex data into actionable insights that drive innovation and measurable impact. Currently pursuing my Master’s in Engineering Management with a focus in Data Science at UMBC, I bring a strong foundation in computer engineering and hands-on experience at Rohde & Schwarz and Accenture. My skills span Python, SQL, Tableau, Power BI, Excel, and SAP, enabling me to optimize processes, automate workflows, and deliver data-driven solutions. With proven abilities in data analytics, visualization, and process improvement, combined with a solid background in project management, stakeholder collaboration, and strategic planning. I strive to bridge the gap between technical precision and business strategy to empower smarter, more efficient decision-making.
+                I'm a results-driven professional passionate about data, quality, and project management, with expertise in transforming complex data into actionable insights that drive innovation and measurable impact. Currently pursuing my Master's in Engineering Management with a focus in Data Science at UMBC, I bring a strong foundation in computer engineering and hands-on experience at Rohde & Schwarz and Accenture. My skills span Python, SQL, Tableau, Power BI, Excel, and SAP, enabling me to optimize processes, automate workflows, and deliver data-driven solutions. With proven abilities in data analytics, visualization, and process improvement, combined with a solid background in project management, stakeholder collaboration, and strategic planning. I strive to bridge the gap between technical precision and business strategy to empower smarter, more efficient decision-making.
             </p>
-
             <div class="stats">
-                <div class="stat-item">
-                    <div class="stat-number">5</div>
-                    <div class="stat-label">Academic Projects Worked On</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">3+</div>
-                    <div class="stat-label">Years of Experience</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">3</div>
-                    <div class="stat-label">Companies Worked</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">100%</div>
-                    <div class="stat-label">Reports Delivered On-Time</div>
-                </div>
+                <div class="stat-item"><div class="stat-number">5</div><div class="stat-label">Academic Projects Worked On</div></div>
+                <div class="stat-item"><div class="stat-number">3+</div><div class="stat-label">Years of Experience</div></div>
+                <div class="stat-item"><div class="stat-number">3</div><div class="stat-label">Companies Worked</div></div>
+                <div class="stat-item"><div class="stat-number">100%</div><div class="stat-label">Reports Delivered On-Time</div></div>
             </div>
+        </div>
+        <div class="hero-image-container">
+            <img src="ProfileImage.jpg" alt="Mrunal Jadhav" class="hero-image">
+            <div class="image-placeholder">👨‍💼</div>
         </div>
     </section>
 
     <section class="section" id="experience">
-        <div class="section-header">
-            <div class="section-icon">💼</div>
-            <h2 class="section-title">Professional Journey</h2>
-        </div>
-
+        <div class="section-header"><div class="section-icon">💼</div><h2 class="section-title">Professional Journey</h2></div>
         <div class="experience-grid">
             <div class="experience-card">
                 <div class="experience-header">
@@ -575,7 +155,6 @@
                     </ul>
                 </div>
             </div>
-
             <div class="experience-card">
                 <div class="experience-header">
                     <div class="company-icon">ACC</div>
@@ -595,7 +174,6 @@
                     </ul>
                 </div>
             </div>
-
             <div class="experience-card">
                 <div class="experience-header">
                     <div class="company-icon">SD</div>
@@ -617,152 +195,118 @@
     </section>
 
     <section class="section" id="projects">
-        <div class="section-header">
-            <div class="section-icon">🚀</div>
-            <h2 class="section-title">Projects</h2>
-        </div>
-
+        <div class="section-header"><div class="section-icon">🚀</div><h2 class="section-title">Projects</h2></div>
         <div class="projects-grid">
             <a href="https://github.com/MrunalJadhav2025/Cyber-Security-Threat-Detection-Using-Big-Data.git" target="_blank" class="project-card">
                 <div class="project-image">🔒</div>
                 <div class="project-content">
                     <h3 class="project-title">Cyber Security Threat Detection</h3>
                     <div class="project-tech">Python • PySpark • XGBoost • Apache Spark</div>
-                    <p class="project-description">
-                        Constructed scalable threat detection system achieving 86.8% accuracy in classifying IoT attacks using big data processing and machine learning techniques.
-                    </p>
+                    <p class="project-description">Constructed scalable threat detection system achieving 86.8% accuracy in classifying IoT attacks using big data processing and machine learning techniques.</p>
                 </div>
             </a>
-
             <a href="https://github.com/MrunalJadhav2025/Employee-Departure-Prediction-Using-Semi-Supervised-Learning.git" target="_blank" class="project-card">
                 <div class="project-image">📊</div>
                 <div class="project-content">
                     <h3 class="project-title">Employee Departure Prediction</h3>
                     <div class="project-tech">Python • KMeans • PCA • Logistic Regression</div>
-                    <p class="project-description">
-                        Formulated semi-supervised learning approach growing label coverage by 70% and achieving 80% predictive accuracy in low-label conditions.
-                    </p>
+                    <p class="project-description">Formulated semi-supervised learning approach growing label coverage by 70% and achieving 80% predictive accuracy in low-label conditions.</p>
                 </div>
             </a>
-
             <a href="https://github.com/MrunalJadhav2025/Credit-Card-Fraud-Detection.git" target="_blank" class="project-card">
                 <div class="project-image">💳</div>
                 <div class="project-content">
                     <h3 class="project-title">Credit Card Fraud Detection</h3>
                     <div class="project-tech">Python • Machine Learning • Isolation Forest</div>
-                    <p class="project-description">
-                        Designed fraud detection system utilizing advanced ML techniques achieving 99% classification accuracy with minimal false positives.
-                    </p>
+                    <p class="project-description">Designed fraud detection system utilizing advanced ML techniques achieving 99% classification accuracy with minimal false positives.</p>
                 </div>
             </a>
         </div>
     </section>
 
     <section class="section" id="education">
-        <div class="section-header">
-            <div class="section-icon">🎓</div>
-            <h2 class="section-title">Education</h2>
-        </div>
-
+        <div class="section-header"><div class="section-icon">🎓</div><h2 class="section-title">Education</h2></div>
         <div class="education-grid">
             <div class="education-card">
                 <h3>Master's in Engineering Management</h3>
                 <div class="education-institution">University of Maryland, Baltimore County</div>
                 <div class="education-date">December 2025</div>
-                <p class="education-description">
-                    Specialization: Data Science<br>
-                    Coursework: Advanced Project Management, Data Management, Machine Learning, Big Data Processing
-                </p>
+                <p class="education-description">Specialization: Data Science<br>Coursework: Advanced Project Management, Data Management, Machine Learning, Big Data Processing</p>
             </div>
-
             <div class="education-card">
                 <h3>Bachelor's in Computer Engineering</h3>
                 <div class="education-institution">Savitribai Phule Pune University, India</div>
                 <div class="education-date">July 2021</div>
-                <p class="education-description">
-                    Coursework: Data Structures & Algorithms, Software Engineering, Software Testing & QA, AI & Robotics
-                </p>
+                <p class="education-description">Coursework: Data Structures & Algorithms, Software Engineering, Software Testing & QA, AI & Robotics</p>
             </div>
         </div>
     </section>
 
     <section class="section" id="skills">
-        <div class="section-header">
-            <div class="section-icon">⚡</div>
-            <h2 class="section-title">Skills</h2>
-        </div>
-
+        <div class="section-header"><div class="section-icon">⚡</div><h2 class="section-title">Skills</h2></div>
         <div class="skills-grid">
-            <div class="skill-card">
-                <div class="skill-icon">🐍</div>
-                <div class="skill-name">Python</div>
-                <div class="skill-category">Programming</div>
+            <div class="skill-card"><div class="skill-icon">🐍</div><div class="skill-name">Python</div><div class="skill-category">Programming</div></div>
+            <div class="skill-card"><div class="skill-icon">📊</div><div class="skill-name">Tableau</div><div class="skill-category">Visualization</div></div>
+            <div class="skill-card"><div class="skill-icon">💾</div><div class="skill-name">SQL</div><div class="skill-category">Database</div></div>
+            <div class="skill-card"><div class="skill-icon">📈</div><div class="skill-name">Power BI</div><div class="skill-category">Analytics</div></div>
+            <div class="skill-card"><div class="skill-icon">🔧</div><div class="skill-name">SAP</div><div class="skill-category">ERP</div></div>
+            <div class="skill-card"><div class="skill-icon">☕</div><div class="skill-name">Java</div><div class="skill-category">Programming</div></div>
+        </div>
+    </section>
+
+    <section class="section" id="research">
+        <div class="section-header"><div class="section-icon">📚</div><h2 class="section-title">Research & Publications</h2></div>
+        <div class="research-grid">
+            <div class="research-card">
+                <div class="research-header">
+                    <div class="research-icon">📄</div>
+                    <div class="research-info">
+                        <h3>Clustering Analytics For Smart Grid Datasets</h3>
+                        <div class="research-type">Research Paper</div>
+                    </div>
+                </div>
+                <a href="Clustering.pdf" class="research-link">Read Full Paper<i class="fas fa-arrow-right"></i></a>
             </div>
-            <div class="skill-card">
-                <div class="skill-icon">📊</div>
-                <div class="skill-name">Tableau</div>
-                <div class="skill-category">Visualization</div>
+            <div class="research-card">
+                <div class="research-header">
+                    <div class="research-icon">🔍</div>
+                    <div class="research-info">
+                        <h3>Boeing 737 Max Problem</h3>
+                        <div class="research-type">Case Study</div>
+                    </div>
+                </div>
+                <a href="Boeing.pdf" class="research-link">View Case Study<i class="fas fa-arrow-right"></i></a>
             </div>
-            <div class="skill-card">
-                <div class="skill-icon">💾</div>
-                <div class="skill-name">SQL</div>
-                <div class="skill-category">Database</div>
-            </div>
-            <div class="skill-card">
-                <div class="skill-icon">📈</div>
-                <div class="skill-name">Power BI</div>
-                <div class="skill-category">Analytics</div>
-            </div>
-            <div class="skill-card">
-                <div class="skill-icon">🔧</div>
-                <div class="skill-name">SAP</div>
-                <div class="skill-category">ERP</div>
-            </div>
-            <div class="skill-card">
-                <h3>Data, Programming and Analytics</h3>
-                    <ul>
-                        <li>Python, R, SQL</li>
-                        <li>Tableau, Power BI</li>
-                        <li>C++, Java, SAP</li>
-						<li>HTML, CSS, JavaScript</li>
-                        <li>MySQL, MongoDB, Oracle PL/SQL</li>
-                        <li>Data Analytics and Visualization</li>
-                    </ul>
-            </div>
-            
+        </div>
+    </section>
+
+    <section class="section" id="certifications">
+        <div class="section-header"><div class="section-icon">🏆</div><h2 class="section-title">Certifications</h2></div>
+        <div class="certifications-grid">
+            <div class="certification-card"><div class="cert-icon">🤖</div><div class="cert-info"><div class="cert-name">Automation Engineer - AI and Data Analytics</div><div class="cert-issuer">Professional Certification</div></div></div>
+            <div class="certification-card"><div class="cert-icon">☕</div><div class="cert-info"><div class="cert-name">Java Programming</div><div class="cert-issuer">Professional Certification</div></div></div>
+            <div class="certification-card"><div class="cert-icon">💾</div><div class="cert-info"><div class="cert-name">MySQL</div><div class="cert-issuer">Professional Certification</div></div></div>
+            <div class="certification-card"><div class="cert-icon">🐍</div><div class="cert-info"><div class="cert-name">Python Programming</div><div class="cert-issuer">Professional Certification</div></div></div>
+            <div class="certification-card"><div class="cert-icon">🧪</div><div class="cert-info"><div class="cert-name">Software Testing</div><div class="cert-issuer">Professional Certification</div></div></div>
+            <div class="certification-card"><div class="cert-icon">🔄</div><div class="cert-info"><div class="cert-name">Agile Methodology</div><div class="cert-issuer">Professional Certification</div></div></div>
+            <div class="certification-card"><div class="cert-icon">📱</div><div class="cert-info"><div class="cert-name">Fundamentals of Digital Marketing</div><div class="cert-issuer">Google</div></div></div>
+            <div class="certification-card"><div class="cert-icon">🏦</div><div class="cert-info"><div class="cert-name">Banking Foundation</div><div class="cert-issuer">Professional Certification</div></div></div>
         </div>
     </section>
 
     <section class="contact-section" id="contact">
-        <div class="section-header" style="justify-content: center;">
-            <div class="section-icon">📧</div>
-            <h2 class="section-title">Contact</h2>
-        </div>
+        <div class="section-header" style="justify-content: center;"><div class="section-icon">📧</div><h2 class="section-title">Contact</h2></div>
         <h2>Let's Get in Touch!</h2>
-        <p class="contact-description">
-            I'm always open to discussing new opportunities, collaborations, or just connecting. Feel free to reach out!
-        </p>
+        <p class="contact-description">I'm always open to discussing new opportunities, collaborations, or just connecting. Feel free to reach out!</p>
         <div class="contact-buttons">
-            <a href="mailto:mrunaljadhav739@gmail.com" class="contact-btn">
-                <i class="fas fa-envelope"></i>
-                Email Me
-            </a>
-            <a href="https://linkedin.com/in/mrunal-jadhav-428806193" target="_blank" class="contact-btn">
-                <i class="fab fa-linkedin"></i>
-                LinkedIn
-            </a>
-            <a href="https://github.com/MrunalJadhav2025" target="_blank" class="contact-btn">
-                <i class="fab fa-github"></i>
-                GitHub
-            </a>
-            <a href="tel:6674500861" class="contact-btn">
-                <i class="fas fa-phone"></i>
-                Call Me: 667-450-0861
-            </a>
+            <a href="mailto:mrunaljadhav739@gmail.com" class="contact-btn"><i class="fas fa-envelope"></i>Email Me</a>
+            <a href="https://linkedin.com/in/mrunal-jadhav-428806193" target="_blank" class="contact-btn"><i class="fab fa-linkedin"></i>LinkedIn</a>
+            <a href="https://github.com/MrunalJadhav2025" target="_blank" class="contact-btn"><i class="fab fa-github"></i>GitHub</a>
+            <a href="tel:6674500861" class="contact-btn"><i class="fas fa-phone"></i>Call Me: 667-450-0861</a>
         </div>
     </section>
 
-    <footer class="footer">
+  <footer class="footer">
         <p>&copy; 2025 Mrunal Vinay Jadhav. All rights reserved.</p>
         <p style="margin-top: 10px;">Baltimore, Maryland</p>
     </footer>
